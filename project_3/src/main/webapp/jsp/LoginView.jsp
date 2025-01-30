@@ -1,4 +1,3 @@
-
 <%@page import="in.co.rays.project_3.controller.UserRegistrationCtl"%>
 <%@page import="in.co.rays.project_3.util.ServletUtility"%>
 <%@page import="in.co.rays.project_3.controller.LoginCtl"%>
@@ -42,13 +41,13 @@ padding-bottom: 11px;
 }
 i.css {
 	border: 2px solid #8080803b;
-	padding-left: 10px;
+	padding-left: 10px
 	
 	background-color: #ebebe0;
 }
 
 .p4 {
-	background-image: url('<%=ORSView.APP_CONTEXT%>/img/unsplash.jpg');
+	background-image: url('<%=ORSView.APP_CONTEXT%>/img/jeshoots.jpg');
 	background-size: cover;
 	background-repeat: no repeat;
 	class= "img-responsive";

@@ -1,6 +1,6 @@
-
 <%@page import="java.util.Iterator"%>
 <%@page import="java.util.List"%>
+<%@page import="java.util.HashMap"%>
 <%@page import="in.co.rays.project_3.model.ModelFactory"%>
 <%@page import="in.co.rays.project_3.model.RoleModelInt"%>
 <%@page import="in.co.rays.project_3.util.DataUtility"%>
@@ -48,7 +48,7 @@
 				scope="request"></jsp:useBean>
 			<%
 				List list1 = (List) request.getAttribute("roleList");
-			List uList = (List) request.getAttribute("uList");
+				List uList = (List) request.getAttribute("uList");
 			%>
 
 
@@ -109,23 +109,38 @@
 			<div class="row">
 
 
-				<div class="col-sm-2"></div>
+				 <div class="col-sm-2"></div>
 				<div class="col-sm-2">
 					<input type="text" name="firstName" placeholder="Enter First Name"
 						class="form-control"
 						value="<%=ServletUtility.getParameter("firstName", request)%>">
-				</div>
-
-				&emsp;
+				</div> 
+				
+				<%-- &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
 				<div class="col-sm-2">
-					<input type="text" name="login" placeholder="Enter Login Id"
-						class="form-control"
-						value="<%=ServletUtility.getParameter("login", request)%>">
-				</div>
-				&emsp;
-				<div class="col-sm-2"><%=HTMLUtility.getList("Role", String.valueOf(dto.getRoleId()), list1)%></div>
-				&emsp;
-				<%-- &emsp;
+
+					<%
+						HashMap map = new HashMap();
+							map.put("Male", "Male");
+							map.put("Female", "Female");
+
+							String htmlList = HTMLUtility.getList("gender", dto.getGender(), map);
+					%>
+					<%=htmlList%></div> --%>
+
+			
+			
+
+			&emsp;
+			<div class="col-sm-2">
+				<input type="text" name="login" placeholder="Enter Login Id"
+					class="form-control"
+					value="<%=ServletUtility.getParameter("login", request)%>">
+			</div>
+			&emsp;
+			<div class="col-sm-2"><%=HTMLUtility.getList("Role", String.valueOf(dto.getRoleId()), list1)%></div>
+			&emsp;
+			<%-- &emsp;
 				<div class="col-sm-2"><%=HTMLUtility.getList("fName", String.valueOf(dto.getFirstName()), uList)%></div>
 				&emsp; --%>
 			<%-- 		
@@ -133,150 +148,148 @@
 					<input type="text" name="dob" class="form-control" placeholder="Enter Date Of Birth" id="datepicker" readonly="readonly"
 							value="<%=DataUtility.getDateString(dto.getDob())%>">
 				</div> --%>
-					<%-- <div class="col-sm-2">
+			<%-- <div class="col-sm-2">
 					<input type="text" name="dob" class="form-control" placeholder="Enter Date Of Birth"
 							value="<%=DataUtility.getDateString(dto.getDob())%>">
 				</div>
  --%>
-				<div class="col-sm-2">
-					<input type="submit" class="btn btn-primary btn-md"
-						style="font-size: 15px" name="operation"
-						value="<%=UserListCtl.OP_SEARCH%>"> &emsp; <input
-						type="submit" class="btn btn-dark btn-md" style="font-size: 15px"
-						name="operation" value="<%=UserListCtl.OP_RESET%>">
-				</div>
-
-
-				<div class="col-sm-2"></div>
+			<div class="col-sm-2">
+				<input type="submit" class="btn btn-primary btn-md"
+					style="font-size: 15px" name="operation"
+					value="<%=UserListCtl.OP_SEARCH%>"> &emsp; <input
+					type="submit" class="btn btn-dark btn-md" style="font-size: 15px"
+					name="operation" value="<%=UserListCtl.OP_RESET%>">
 			</div>
 
-			</br>
-			<div style="margin-bottom: 20px;" class="table-responsive">
-				<table class="table table-bordered table-dark table-hover">
-					<thead>
-						<tr style="background-color: blue;">
 
-							<th width="10%"><input type="checkbox" id="select_all"
-								name="Select" class="text"> Select All</th>
-							<th width="5%" class="text">S.NO</th>
-							<th width="15%" class="text">FirstName</th>
-							<th width="15%" class="text">LastName</th>
-							<th width="20%" class="text">LoginId</th>
-							<th width="10%" class="text">Gender</th>
-							<th width="10%" class="text">Role</th>
-							<th width="10%" class="text">DOB</th>
-							<th width="5%" class="text">Edit</th>
-						</tr>
-					</thead>
-					<%
-						while (it.hasNext()) {
-								dto = it.next();
+			<div class="col-sm-2"></div>
+	</div>
 
-								RoleDTO rbean = rmodel.findByPK(dto.getRoleId());
-					%>
-					<tbody>
-						<tr>
-							<td align="center"><input type="checkbox" class="checkbox"
-								name="ids" value="<%=dto.getId()%>"
-								<%if (dto.getRoleId() == RoleDTO.ADMIN) {%> <%="disabled"%>
-								<%}%>></td>
-							<td class="text"><%=index++%></td>.
-							<td class="text"><%=dto.getFirstName()%></td>
-							<td class="text"><%=dto.getLastName()%></td>
-							<td class="text"><%=dto.getLogin()%></td>
-							<td class="text"><%=dto.getGender()%></td>
-							<td class="text"><%=rbean.getName()%></td>
-							<td class="text"><%=DataUtility.getDateString(dto.getDob())%></td>
-							<td class="text"><a href="UserCtl?id=<%=dto.getId()%>"
-								<%if (dto.getRoleId() == RoleDTO.ADMIN) {%>
-								onclick="return false;" <%}%>>Edit</a></td>
-						</tr>
-					</tbody>
-					<%
-						}
-					%>
-				</table>
-			</div>
-			<table width="100%">
-				<tr>
-					<td><input type="submit" name="operation"
-						class="btn btn-warning btn-md" style="font-size: 17px"
-						value="<%=UserListCtl.OP_PREVIOUS%>"
-						<%=pageNo > 1 ? "" : "disabled"%>></td>
+	</br>
+	<div style="margin-bottom: 20px;" class="table-responsive">
+		<table class="table table-bordered table-dark table-hover">
+			<thead>
+				<tr style="background-color: blue;">
 
-					<td><input type="submit" name="operation"
-						class="btn btn-primary btn-md" style="font-size: 17px"
-						value="<%=UserListCtl.OP_NEW%>"></td>
-
-					<td><input type="submit" name="operation"
-						class="btn btn-danger btn-md" style="font-size: 17px"
-						value="<%=UserListCtl.OP_DELETE%>"></td>
-
-					<td align="right"><input type="submit" name="operation"
-						class="btn btn-warning btn-md" style="font-size: 17px"
-						style="padding: 5px;" value="<%=UserListCtl.OP_NEXT%>"
-						<%=(nextPageSize != 0) ? "" : "disabled"%>></td>
+					<th width="10%"><input type="checkbox" id="select_all"
+						name="Select" class="text"> Select All</th>
+					<th width="5%" class="text">S.NO</th>
+					<th width="15%" class="text">FirstName</th>
+					<th width="15%" class="text">LastName</th>
+					<th width="20%" class="text">LoginId</th>
+					<th width="10%" class="text">Gender</th>
+					<th width="10%" class="text">Role</th>
+					<th width="10%" class="text">DOB</th>
+					<th width="5%" class="text">Edit</th>
 				</tr>
-				<tr></tr>
-			</table>
-
+			</thead>
 			<%
-				}
-				if (list.size() == 0) {
+				while (it.hasNext()) {
+						dto = it.next();
+
+						RoleDTO rbean = rmodel.findByPK(dto.getRoleId());
 			%>
-			<center>
-				<h1 style="font-size: 40px; color: #162390;">User List</h1>
-			</center>
-			</br>
-			<div class="row">
-				<div class="col-md-4"></div>
-
-				<%
-					if (!ServletUtility.getErrorMessage(request).equals("")) {
-				%>
-				<div class=" col-md-4 alert alert-danger alert-dismissible">
-					<button type="button" class="close" data-dismiss="alert">&times;</button>
-					<h4>
-						<font color="red"> <%=ServletUtility.getErrorMessage(request)%></font>
-					</h4>
-				</div>
-				<%
-					}
-				%>
-
-
-
-
-				<%
-					if (!ServletUtility.getSuccessMessage(request).equals("")) {
-				%>
-
-				<div class="col-md-4 alert alert-success alert-dismissible"
-					style="background-color: #80ff80">
-					<button type="button" class="close" data-dismiss="alert">&times;</button>
-					<h4>
-						<font color="#008000"><%=ServletUtility.getSuccessMessage(request)%></font>
-					</h4>
-				</div>
-				<%
-					}
-				%>
-				<div style="padding-left: 48%;">
-					<input type="submit" name="operation"
-						class="btn btn-primary btn-md" style="font-size: 17px"
-						value="<%=UserListCtl.OP_BACK%>">
-				</div>
-
-				<div class="col-md-4"></div>
-			</div>
-
+			<tbody>
+				<tr>
+					<td align="center"><input type="checkbox" class="checkbox"
+						name="ids" value="<%=dto.getId()%>"
+						<%if (dto.getRoleId() == RoleDTO.ADMIN) {%> <%="disabled"%> <%}%>></td>
+					<td class="text"><%=index++%></td>.
+					<td class="text"><%=dto.getFirstName()%></td>
+					<td class="text"><%=dto.getLastName()%></td>
+					<td class="text"><%=dto.getLogin()%></td>
+					<td class="text"><%=dto.getGender()%></td>
+					<td class="text"><%=rbean.getName()%></td>
+					<td class="text"><%=DataUtility.getDateString(dto.getDob())%></td>
+					<td class="text"><a href="UserCtl?id=<%=dto.getId()%>"
+						<%if (dto.getRoleId() == RoleDTO.ADMIN) {%>
+						onclick="return false;" <%}%>>Edit</a></td>
+				</tr>
+			</tbody>
 			<%
 				}
 			%>
+		</table>
+	</div>
+	<table width="100%">
+		<tr>
+			<td><input type="submit" name="operation"
+				class="btn btn-warning btn-md" style="font-size: 17px"
+				value="<%=UserListCtl.OP_PREVIOUS%>"
+				<%=pageNo > 1 ? "" : "disabled"%>></td>
 
-			<input type="hidden" name="pageNo" value="<%=pageNo%>"> <input
-				type="hidden" name="pageSize" value="<%=pageSize%>">
-		</form>
+			<td><input type="submit" name="operation"
+				class="btn btn-primary btn-md" style="font-size: 17px"
+				value="<%=UserListCtl.OP_NEW%>"></td>
+
+			<td><input type="submit" name="operation"
+				class="btn btn-danger btn-md" style="font-size: 17px"
+				value="<%=UserListCtl.OP_DELETE%>"></td>
+
+			<td align="right"><input type="submit" name="operation"
+				class="btn btn-warning btn-md" style="font-size: 17px"
+				style="padding: 5px;" value="<%=UserListCtl.OP_NEXT%>"
+				<%=(nextPageSize != 0) ? "" : "disabled"%>></td>
+		</tr>
+		<tr></tr>
+	</table>
+
+	<%
+		}
+		if (list.size() == 0) {
+	%>
+	<center>
+		<h1 style="font-size: 40px; color: #162390;">User List</h1>
+	</center>
+	</br>
+	<div class="row">
+		<div class="col-md-4"></div>
+
+		<%
+			if (!ServletUtility.getErrorMessage(request).equals("")) {
+		%>
+		<div class=" col-md-4 alert alert-danger alert-dismissible">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<h4>
+				<font color="red"> <%=ServletUtility.getErrorMessage(request)%></font>
+			</h4>
+		</div>
+		<%
+			}
+		%>
+
+
+
+
+		<%
+			if (!ServletUtility.getSuccessMessage(request).equals("")) {
+		%>
+
+		<div class="col-md-4 alert alert-success alert-dismissible"
+			style="background-color: #80ff80">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<h4>
+				<font color="#008000"><%=ServletUtility.getSuccessMessage(request)%></font>
+			</h4>
+		</div>
+		<%
+			}
+		%>
+		<div style="padding-left: 48%;">
+			<input type="submit" name="operation" class="btn btn-primary btn-md"
+				style="font-size: 17px" value="<%=UserListCtl.OP_BACK%>">
+		</div>
+
+		<div class="col-md-4"></div>
+	</div>
+
+	<%
+		}
+	%>
+
+	<input type="hidden" name="pageNo" value="<%=pageNo%>">
+	<input type="hidden" name="pageSize" value="<%=pageSize%>">
+	</form>
 
 
 	</div>

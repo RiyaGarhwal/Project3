@@ -13,6 +13,9 @@ public final class ModelFactory {
 	private static ResourceBundle rb = ResourceBundle.getBundle("in.co.rays.project_3.bundle.system");
 	private static final String DATABASE = rb.getString("DATABASE");
 
+	//HashMap modelCache har model ka ek instance save karta hai taaki bar-bar naye objects na banane
+	//padhein. Ek baar model create hone ke baad, wahi cached instance return hota hai.java Copy code
+
 	private static ModelFactory mFactory = null;
 	private static HashMap modelCache = new HashMap();
 
@@ -27,6 +30,12 @@ public final class ModelFactory {
 		return mFactory;
 	}
 
+//	Har model ke liye ek method hai jo modelCache me check karta hai:Agar pehle se instance available hai, to wahi
+//	return hota hai.Nahi to DATABASE property ke basis pe Hibernate ya JDBC implementation ka object banake cache 
+//me daala jata hai aur return hota hai.
+	
+	
+	
 	public MarksheetModelInt getMarksheetModel() {
 		MarksheetModelInt marksheetModel = (MarksheetModelInt) modelCache.get("marksheetModel");
 		if (marksheetModel == null) {

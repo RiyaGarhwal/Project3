@@ -15,7 +15,8 @@
 body{
 
 
-	 background-image: url('img/jeshoots.jpg');	
+	 background-image: url('img/jeshoots.jpg');	 
+	  /* background-image: url('C:\Users\shrey\OneDrive\Desktop\bg walllpaper'); */	
 	 background-size:100%;
 	background-repeat: no-repeat;
 } 

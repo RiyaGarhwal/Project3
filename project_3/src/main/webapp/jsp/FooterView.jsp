@@ -12,7 +12,7 @@
 	width: 100%;
 	color: white;
 	text-align: center;
-	background-color: red;
+	background-color: #716c6c;
 }
 </style>
 </head>
